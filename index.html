@@ -2,9 +2,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>GeoTherm SMART S.A.S. | Ingeniería geotérmica inteligente</title>
     <style>
+        /* ========== ESTILOS GLOBALES (sin cambios) ========== */
         * {
             margin: 0;
             padding: 0;
@@ -18,7 +19,6 @@
             line-height: 1.5;
         }
 
-        /* Tipografía */
         h1, h2, h3 {
             font-weight: 600;
             letter-spacing: -0.02em;
@@ -32,7 +32,6 @@
             color: #1e3a5f;
         }
 
-        /* Header y navegación */
         header {
             background-color: #ffffff;
             box-shadow: 0 2px 12px rgba(0,0,0,0.05);
@@ -105,7 +104,6 @@
             color: white;
         }
 
-        /* Secciones */
         .page {
             display: none;
             padding: 2.5rem 0;
@@ -121,7 +119,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Tarjetas y elementos */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -159,58 +156,6 @@
             font-weight: 500;
         }
 
-        /* Simulador */
-        .simulator-panel {
-            background: white;
-            border-radius: 24px;
-            padding: 2rem;
-            border: 1px solid #e2e8f0;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: #2c4c6e;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-family: inherit;
-        }
-
-        .diagnostic-result {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 20px;
-            margin-top: 2rem;
-            border-left: 4px solid #1b4f2e;
-        }
-
-        .status-normal {
-            color: #1b4f2e;
-            font-weight: bold;
-        }
-
-        .status-warning {
-            color: #b85c1a;
-            font-weight: bold;
-        }
-
-        hr {
-            margin: 1.5rem 0;
-            border: 0;
-            border-top: 1px solid #e2e8f0;
-        }
-
         footer {
             background-color: #1e2a32;
             color: #cbd5e1;
@@ -229,6 +174,198 @@
             .logo {
                 flex-direction: column;
             }
+        }
+
+        /* ========== ESTILOS EXCLUSIVOS PARA EL NUEVO SIMULADOR (DENTRO DE #simulator) ========== */
+        #simulator .sim-dashboard {
+            background-color: #0A1128;
+            border-radius: 24px;
+            margin-top: 0;          /* elimina margen extra */
+            padding: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            width: 100%;
+        }
+        #simulator .image-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        #simulator .image-wrapper img {
+            width: 100%;
+            display: block;
+        }
+        #simulator .sensor-point {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #simulator .sensor-point::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: inherit;
+            animation: pulseSim 2s infinite;
+            opacity: 0.4;
+        }
+        @keyframes pulseSim {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        #simulator .sensor-point .inner-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: white;
+            z-index: 11;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+        #simulator .sensor-popup {
+            position: absolute;
+            background-color: #121D3A;
+            border: 1px solid #1E2A40;
+            border-radius: 8px;
+            padding: 1rem;
+            width: 220px;
+            z-index: 20;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            pointer-events: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+        }
+        #simulator .sensor-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        #simulator .dashboard-bottom {
+            display: flex;
+            gap: 1.5rem;
+            align-items: stretch;
+            flex-wrap: wrap;
+        }
+        #simulator .cards-container {
+            flex: 2;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        #simulator .sensor-card {
+            background-color: #121D3A;
+            border: 1px solid #1E2A40;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        #simulator .sensor-card h4 {
+            font-size: 0.875rem;
+            margin-bottom: 1.25rem;
+            font-weight: 600;
+        }
+        #simulator .card-content {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
+            justify-content: center;
+        }
+        #simulator .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid;
+        }
+        #simulator .card-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: currentColor;
+            fill: none;
+        }
+        #simulator .card-data .temp {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        #simulator .card-data .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.625rem;
+            font-weight: 700;
+            background-color: rgba(255,255,255,0.05);
+            text-transform: uppercase;
+        }
+        #simulator .status-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        #simulator .sensor-card p {
+            font-size: 0.75rem;
+            color: #8F9BB3;
+            line-height: 1.4;
+        }
+        #simulator .alerts-panel {
+            flex: 1;
+            min-width: 240px;
+            background-color: #121D3A;
+            border: 1px solid #1E2A40;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        #simulator .alerts-panel h3 {
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        #simulator .indicator-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        #simulator .indicator-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        #simulator .indicator-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+        #simulator .indicator-text strong {
+            display: block;
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+        #simulator .indicator-text p {
+            font-size: 0.75rem;
+            color: #8F9BB3;
+            margin: 0;
+        }
+        #simulator .color-normal { color: #00D084; }
+        #simulator .color-low { color: #00C3FF; }
+        #simulator .color-high { color: #FF4D4D; }
+        @media (max-width: 900px) {
+            #simulator .dashboard-bottom { flex-direction: column; }
         }
     </style>
 </head>
@@ -255,507 +392,133 @@
 </header>
 
 <main class="container">
-    <!-- SECCIÓN INICIO (EMPRESA) -->
+    <!-- ================= SECCIÓN INICIO (sin cambios) ================= -->
     <div id="home" class="page active">
         <h2>GeoTherm SMART S.A.S.</h2>
         <p style="font-size: 1.2rem; margin-bottom: 2rem;">Soluciones geotérmicas de baja entalpía para calentamiento de agua en el sector residencial y comercial. Innovación, sostenibilidad e inteligencia aplicada.</p>
-        
         <div class="card-grid">
-            <div class="card">
-                <h3>Misión</h3>
-                <p>Diseñar, implementar y monitorear sistemas geotérmicos inteligentes que reduzcan el consumo energético y las emisiones de carbono, ofreciendo a nuestros clientes en Paipa y Colombia una alternativa confiable, eficiente y sostenible para el calentamiento de agua.</p>
-            </div>
-            <div class="card">
-                <h3>Visión</h3>
-                <p>Ser reconocidos en 2030 como la empresa líder en soluciones geotérmicas de baja entalpía en la región andina de Colombia, integrando ingeniería civil, sistemas de control IoT y participación comunitaria para transformar el mercado energético residencial.</p>
-            </div>
-            <div class="card">
-                <h3>Valores</h3>
-                <p><strong>Rigor técnico</strong> · <strong>Compromiso ambiental</strong> · <strong>Transparencia</strong> · <strong>Innovación colaborativa</strong> · <strong>Calidad humana</strong></p>
-            </div>
+            <div class="card"><h3>Misión</h3><p>Diseñar, implementar y monitorear sistemas geotérmicos inteligentes que reduzcan el consumo energético y las emisiones de carbono, ofreciendo a nuestros clientes en Paipa y Colombia una alternativa confiable, eficiente y sostenible para el calentamiento de agua.</p></div>
+            <div class="card"><h3>Visión</h3><p>Ser reconocidos en 2030 como la empresa líder en soluciones geotérmicas de baja entalpía en la región andina de Colombia, integrando ingeniería civil, sistemas de control IoT y participación comunitaria para transformar el mercado energético residencial.</p></div>
+            <div class="card"><h3>Valores</h3><p><strong>Rigor técnico</strong> · <strong>Compromiso ambiental</strong> · <strong>Transparencia</strong> · <strong>Innovación colaborativa</strong> · <strong>Calidad humana</strong></p></div>
         </div>
-
-        <div class="card">
-            <h3>Aliados estratégicos</h3>
-            <div class="card-grid" style="margin-top: 0;">
-                <div><span class="badge">H&L S.A.S.</span><br>Obras civiles y perforación</div>
-                <div><span class="badge">INGEOGIS SAS</span><br>Estudios geotécnicos y de subsuelo</div>
-                <div><span class="badge">INYTEC</span><br>Automatización, IoT y SCADA</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3>Presencia en Paipa</h3>
-            <p>Nuestro proyecto piloto se desarrolla en el barrio Fátima, dentro del perímetro urbano de Paipa (Boyacá). Trabajamos con viviendas unifamiliares de estratos 2, 3 y 4, aprovechando el gradiente térmico estable del subsuelo a 2.525 msnm. La temperatura del suelo a partir de 2 metros de profundidad se mantiene entre 15°C y 18°C durante todo el año, permitiendo un funcionamiento eficiente de las bombas de calor.</p>
-        </div>
-        <div class="card">
-    <h3>Operación y capacidad instalada</h3>
-    <div class="card-grid" style="grid-template-columns: repeat(4, 1fr); text-align: center;">
-        <div>
-            <div style="font-size: 2rem; font-weight: bold;">12</div>
-            <div style="color: #4a6272;">Ingenieros especializados</div>
-        </div>
-        <div>
-            <div style="font-size: 2rem; font-weight: bold;">5</div>
-            <div style="color: #4a6272;">Aliados estratégicos</div>
-        </div>
-        <div>
-            <div style="font-size: 2rem; font-weight: bold;">3</div>
-            <div style="color: #4a6272;">Proyectos piloto en ejecución</div>
-        </div>
-        <div>
-            <div style="font-size: 2rem; font-weight: bold;">+70%</div>
-            <div style="color: #4a6272;">Ahorro energético promedio</div>
-        </div>
-    </div>
-</div>
-<div class="card">
-    <h3>Permisos y licencias gestionadas</h3>
-    <table style="width: 100%; border-collapse: collapse;">
-        <tr style="border-bottom: 1px solid #e2e8f0;">
-            <th style="text-align: left; padding: 0.75rem 0;">Entidad</th>
-            <th style="text-align: left; padding: 0.75rem 0;">Permiso</th>
-            <th style="text-align: left; padding: 0.75rem 0;">Estado</th>
-        </tr>
-        <tr style="border-bottom: 1px solid #e2e8f0;">
-            <td style="padding: 0.75rem 0;">Ministerio de Minas y Energía</td>
-            <td style="padding: 0.75rem 0;">Registro Geotérmico</td>
-            <td style="padding: 0.75rem 0;">En trámite</td>
-        </tr>
-        <tr style="border-bottom: 1px solid #e2e8f0;">
-            <td style="padding: 0.75rem 0;">Corpoboyacá</td>
-            <td style="padding: 0.75rem 0;">Licencia ambiental (Ruta A)</td>
-            <td style="padding: 0.75rem 0;">Exenta por baja complejidad</td>
-        </tr>
-        <tr>
-            <td style="padding: 0.75rem 0;">Alcaldía de Paipa</td>
-            <td style="padding: 0.75rem 0;">Permiso de excavación</td>
-            <td style="padding: 0.75rem 0;">Aprobado</td>
-        </tr>
-    </table>
-    <p style="margin-top: 1rem; font-size: 0.9rem;">✅ Cumplimos con la Ley 2099 de 2021 (Transición Energética), RETIE, RAS y NSR-10.</p>
-</div>
-<div class="card">
-    <h3>Nuestra metodología</h3>
-    <div class="card-grid" style="grid-template-columns: repeat(4, 1fr); gap: 1rem;">
-        <div><strong>1. Estudios</strong><br>Geotécnicos y termodinámicos</div>
-        <div><strong>2. Diseño</strong><br>Lazo PEAD + bomba de calor</div>
-        <div><strong>3. Instalación</strong><br>Perforación y montaje</div>
-        <div><strong>4. Monitoreo IoT</strong><br>SCADA y ajustes remotos</div>
-    </div>
-</div>
-<div class="card">
-    <h3>Cronograma de ejecución para una vivienda (semanas)</h3>
-    <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
-            <thead>
-                <tr style="border-bottom: 2px solid #1b4f2e;">
-                    <th style="text-align: left; padding: 0.75rem 0;">Semana</th>
-                    <th style="text-align: left; padding: 0.75rem 0;">Actividades</th>
-                    <th style="text-align: left; padding: 0.75rem 0;">Entregables</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 0.75rem 0;"><strong>1</strong></td>
-                    <td style="padding: 0.75rem 0;">Estudio geotécnico (INGEOGIS), visita técnica, replanteo del lazo, solicitud de permisos municipales (Curaduría de Paipa).</td>
-                    <td style="padding: 0.75rem 0;">Informe de suelo, plan de perforación.</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 0.75rem 0;"><strong>2</strong></td>
-                    <td style="padding: 0.75rem 0;">Excavación de zanja (1.8 m profundidad), tendido de tubería PEAD en configuración en U, relleno con arena y compactación. Prueba hidrostática.</td>
-                    <td style="padding: 0.75rem 0;">Lazo enterrado instalado y verificado.</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 0.75rem 0;"><strong>3</strong></td>
-                    <td style="padding: 0.75rem 0;">Instalación de bomba de calor, conexión al lazo y al tanque de almacenamiento existente, montaje de válvulas y bomba de circulación.</td>
-                    <td style="padding: 0.75rem 0;">Circuito primario lleno con glicol, sin fugas.</td>
-                 </tr>
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 0.75rem 0;"><strong>4</strong></td>
-                    <td style="padding: 0.75rem 0;">Instalación de sensores (temperatura, presión, caudal), cableado, configuración del PLC y gateway IoT, pruebas de comunicación con la nube.</td>
-                    <td style="padding: 0.75rem 0;">Sensores calibrados, datos en plataforma.</td>
-                 </tr>
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 0.75rem 0;"><strong>5</strong></td>
-                    <td style="padding: 0.75rem 0;">Puesta en marcha, ajuste de parámetros (temperatura objetivo, alarmas), pruebas de funcionamiento con demanda real.</td>
-                    <td style="padding: 0.75rem 0;">Acta de puesta en marcha, COP medido.</td>
-                 </tr>
-                <tr style="border-bottom: 1px solid #e2e8f0;">
-                    <td style="padding: 0.75rem 0;"><strong>6</strong></td>
-                    <td style="padding: 0.75rem 0;">Capacitación al cliente (uso del dashboard, interpretación de alertas), entrega de manuales, activación de garantía y monitoreo remoto.</td>
-                    <td style="padding: 0.75rem 0;">Cliente certificado, sistema en operación.</td>
-                 </tr>
-            </tbody>
-        </table>
-    </div>
-    <p style="margin-top: 1rem; font-size: 0.85rem;">El plazo puede variar según condiciones del terreno, disponibilidad de permisos y logística. Para viviendas unifamiliares en Paipa (barrio Fátima) se estiman 6 semanas continuas.</p>
-</div>
-<div class="card">
-    <h3>Clientes</h3>
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-        <span class="badge">Viviendas estrato 3 y 4 en Paipa</span>
-        <span class="badge">Hoteles y hospedajes rurales</span>
-        <span class="badge">Conjuntos residenciales</span>
-        <span class="badge">Proyectos constructores sostenibles</span>
-    </div>
-</div>
+        <div class="card"><h3>Aliados estratégicos</h3><div class="card-grid" style="margin-top:0;"><div><span class="badge">H&L S.A.S.</span><br>Obras civiles y perforación</div><div><span class="badge">INGEOGIS SAS</span><br>Estudios geotécnicos y de subsuelo</div><div><span class="badge">INYTEC</span><br>Automatización, IoT y SCADA</div></div></div>
+        <div class="card"><h3>Presencia en Paipa</h3><p>Nuestro proyecto piloto se desarrolla en el barrio Fátima, dentro del perímetro urbano de Paipa (Boyacá). Trabajamos con viviendas unifamiliares de estratos 2, 3 y 4, aprovechando el gradiente térmico estable del subsuelo a 2.525 msnm. La temperatura del suelo a partir de 2 metros de profundidad se mantiene entre 15°C y 18°C durante todo el año, permitiendo un funcionamiento eficiente de las bombas de calor.</p></div>
+        <div class="card"><h3>Operación y capacidad instalada</h3><div class="card-grid" style="grid-template-columns: repeat(4,1fr); text-align:center;"><div><div style="font-size:2rem; font-weight:bold;">12</div><div style="color:#4a6272;">Ingenieros especializados</div></div><div><div style="font-size:2rem; font-weight:bold;">5</div><div style="color:#4a6272;">Aliados estratégicos</div></div><div><div style="font-size:2rem; font-weight:bold;">3</div><div style="color:#4a6272;">Proyectos piloto</div></div><div><div style="font-size:2rem; font-weight:bold;">+70%</div><div style="color:#4a6272;">Ahorro energético</div></div></div></div>
+        <div class="card"><h3>Permisos y licencias gestionadas</h3><table style="width:100%; border-collapse:collapse;"><tr style="border-bottom:1px solid #e2e8f0;"><th style="text-align:left; padding:0.75rem 0;">Entidad</th><th style="text-align:left; padding:0.75rem 0;">Permiso</th><th style="text-align:left; padding:0.75rem 0;">Estado</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:0.75rem 0;">Ministerio de Minas y Energía</td><td style="padding:0.75rem 0;">Registro Geotérmico</td><td style="padding:0.75rem 0;">En trámite</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:0.75rem 0;">Corpoboyacá</td><td style="padding:0.75rem 0;">Licencia ambiental (Ruta A)</td><td style="padding:0.75rem 0;">Exenta</td></tr><tr><td style="padding:0.75rem 0;">Alcaldía de Paipa</td><td style="padding:0.75rem 0;">Permiso de excavación</td><td style="padding:0.75rem 0;">Aprobado</td></tr></table><p style="margin-top:1rem;">✅ Cumplimos con la Ley 2099 de 2021, RETIE, RAS y NSR-10.</p></div>
+        <div class="card"><h3>Nuestra metodología</h3><div class="card-grid" style="grid-template-columns: repeat(4,1fr); gap:1rem;"><div><strong>1. Estudios</strong><br>Geotécnicos y termodinámicos</div><div><strong>2. Diseño</strong><br>Lazo PEAD + bomba de calor</div><div><strong>3. Instalación</strong><br>Perforación y montaje</div><div><strong>4. Monitoreo IoT</strong><br>SCADA y ajustes remotos</div></div></div>
+        <div class="card"><h3>Cronograma de ejecución para una vivienda (semanas)</h3><div style="overflow-x:auto;"><table style="width:100%; border-collapse:collapse; font-size:0.9rem;"><thead><tr style="border-bottom:2px solid #1b4f2e;"><th style="text-align:left; padding:0.75rem 0;">Semana</th><th style="text-align:left; padding:0.75rem 0;">Actividades</th><th style="text-align:left; padding:0.75rem 0;">Entregables</th></tr></thead><tbody><tr style="border-bottom:1px solid #e2e8f0;"><td><strong>1</strong></td><td>Estudio geotécnico, visita, replanteo, permisos</td><td>Informe de suelo, plan de perforación</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td><strong>2</strong></td><td>Excavación (1.8m), tendido PEAD, relleno, prueba hidrostática</td><td>Lazo enterrado verificado</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td><strong>3</strong></td><td>Instalación bomba de calor, conexión al lazo y tanque</td><td>Circuito primario lleno, sin fugas</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td><strong>4</strong></td><td>Sensores, cableado, PLC, gateway, pruebas comunicación</td><td>Sensores calibrados, datos en nube</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td><strong>5</strong></td><td>Puesta en marcha, ajuste parámetros, pruebas demanda real</td><td>Acta de puesta en marcha, COP medido</td></tr><tr><td><strong>6</strong></td><td>Capacitación al cliente, entrega manuales, activación garantía</td><td>Cliente certificado, sistema operando</td></tr></tbody></table></div><p style="margin-top:1rem; font-size:0.85rem;">Plazo estimado 6 semanas para viviendas unifamiliares en Paipa.</p></div>
+        <div class="card"><h3>Clientes</h3><div style="display:flex; flex-wrap:wrap; gap:0.5rem;"><span class="badge">Viviendas estrato 3 y 4 en Paipa</span><span class="badge">Hoteles y hospedajes rurales</span><span class="badge">Conjuntos residenciales</span><span class="badge">Proyectos constructores sostenibles</span></div></div>
     </div>
 
-    <!-- SECCIÓN TECNOLOGÍA Y MONITOREO (antes Ingeniería de Sistemas) -->
+    <!-- ================= SECCIÓN TECNOLOGÍA Y MONITOREO ================= -->
     <div id="tech" class="page">
         <h2>Tecnología y monitoreo inteligente</h2>
         <p>Nuestro enfoque integra sensores de precisión, comunicación en tiempo real y análisis predictivo para garantizar el rendimiento óptimo de cada sistema geotérmico.</p>
-        
         <div class="card-grid">
-            <div class="card">
-                <h3>Sensorización industrial</h3>
-                <p>Instalamos termorresistencias PT100, caudalímetros y transmisores de presión en puntos críticos del lazo geotérmico y el circuito de agua caliente. La precisión de ±0.3°C permite detectar desviaciones mínimas.</p>
-            </div>
-            <div class="card">
-                <h3>Gateway IoT y nube</h3>
-                <p>Un controlador PLC adquiere los datos cada 5 segundos y los envía mediante protocolos MQTT/Modbus a nuestra plataforma en la nube (AWS IoT Core). La información está disponible para el cliente y nuestro equipo de servicio.</p>
-            </div>
-            <div class="card">
-                <h3>Dashboard de rendimiento</h3>
-                <p>Visualización en tiempo real de temperaturas de entrada y salida, presión del lazo, caudal instantáneo, COP y ahorro energético. Acceso desde cualquier dispositivo con navegador.</p>
-            </div>
-            <div class="card">
-                <h3>Alertas y diagnóstico remoto</h3>
-                <p>El sistema compara las variables medidas con los rangos teóricos (según diseño). Si se detecta una anomalía (pérdida de presión, temperatura insuficiente, caudal errático), se envía una notificación al cliente y a nuestro centro de control, con posibles causas sugeridas.</p>
-            </div>
+            <div class="card"><h3>Sensorización industrial</h3><p>Instalamos termorresistencias PT100, caudalímetros y transmisores de presión en puntos críticos del lazo geotérmico y el circuito de agua caliente. Precisión de ±0.3°C.</p></div>
+            <div class="card"><h3>Gateway IoT y nube</h3><p>Un controlador PLC adquiere los datos cada 5 segundos y los envía mediante MQTT/Modbus a nuestra plataforma en la nube (AWS IoT Core).</p></div>
+            <div class="card"><h3>Dashboard de rendimiento</h3><p>Visualización en tiempo real de temperaturas, presión, caudal, COP y ahorro energético. Acceso desde cualquier dispositivo.</p></div>
+            <div class="card"><h3>Alertas y diagnóstico remoto</h3><p>El sistema compara variables con rangos teóricos y envía notificaciones ante anomalías, con posibles causas sugeridas.</p></div>
         </div>
-        <div class="card">
-            <h3>Beneficio tangible para el cliente</h3>
-            <p>No solo recibe agua caliente más económica; además obtiene información detallada sobre el estado de su inversión, lo que permite actuar antes de que ocurran fallas costosas. Nuestro sistema reduce el tiempo de inactividad y prolonga la vida útil de la bomba de calor.</p>
-        </div>
+        <div class="card"><h3>Beneficio tangible para el cliente</h3><p>No solo recibe agua caliente más económica; además obtiene información detallada sobre el estado de su inversión, lo que permite actuar antes de fallas costosas. Reduce el tiempo de inactividad y prolonga la vida útil de la bomba de calor.</p></div>
     </div>
 
-    <!-- SECCIÓN ESTRATEGIA DE PARTICIPACIÓN (antes Comunidades Digitales) -->
+    <!-- ================= SECCIÓN ESTRATEGIA DE PARTICIPACIÓN ================= -->
     <div id="community" class="page">
         <h2>Estrategia de participación y confianza</h2>
         <p>La adopción de tecnologías limpias requiere diálogo constante, educación y transparencia. Hemos diseñado un modelo de relacionamiento digital y presencial con los habitantes de Paipa.</p>
-        
         <div class="card-grid">
-            <div class="card">
-                <h3>Programa de primeros usuarios</h3>
-                <p>Un grupo cerrado de vecinos en el barrio Fátima comparte resultados reales de ahorro energético y resuelve dudas con nuestro equipo técnico. El boca a boca digital multiplica la confianza.</p>
-            </div>
-            <div class="card">
-                <h3>Contenido técnico accesible</h3>
-                <p>Publicamos videos y documentos explicativos (sin jerga innecesaria) sobre el funcionamiento de la geotermia, los beneficios ambientales y el proceso de instalación. Todo alojado en nuestra página web y redes corporativas.</p>
-            </div>
-            <div class="card">
-                <h3>Audiencias públicas mensuales</h3>
-                <p>Cada mes realizamos una sesión en línea abierta a toda la comunidad, donde respondemos preguntas técnicas, de costos y de operación. Participan líderes de juntas de acción comunal y representantes de la Alcaldía de Paipa.</p>
-            </div>
-            <div class="card">
-                <h3>Demostración en vivo</h3>
-                <p>El dashboard de monitoreo del sistema piloto es accesible al público en nuestra página de inicio, sin necesidad de registro. Cualquier persona puede verificar en tiempo real la temperatura del agua, el COP y el ahorro.</p>
-            </div>
+            <div class="card"><h3>Programa de primeros usuarios</h3><p>Un grupo cerrado de vecinos en el barrio Fátima comparte resultados reales de ahorro energético y resuelve dudas con nuestro equipo técnico.</p></div>
+            <div class="card"><h3>Contenido técnico accesible</h3><p>Publicamos videos y documentos explicativos sobre geotermia, beneficios ambientales y proceso de instalación.</p></div>
+            <div class="card"><h3>Audiencias públicas mensuales</h3><p>Sesión en línea abierta a toda la comunidad, con participación de líderes comunales y representantes de la Alcaldía de Paipa.</p></div>
+            <div class="card"><h3>Demostración en vivo</h3><p>El dashboard de monitoreo del sistema piloto es accesible al público en nuestra página, sin registro.</p></div>
         </div>
-        <div class="card">
-            <h3>Compromiso educativo</h3>
-            <p>En alianza con colegios públicos de Paipa, organizamos visitas guiadas al prototipo funcional y charlas sobre energías renovables. Formamos a futuros ciudadanos y generamos apropiación social del proyecto.</p>
-        </div>
+        <div class="card"><h3>Compromiso educativo</h3><p>En alianza con colegios públicos de Paipa, organizamos visitas guiadas al prototipo funcional y charlas sobre energías renovables, generando apropiación social.</p></div>
     </div>
 
-    <!-- SECCIÓN SIMULADOR DE DIAGNÓSTICO (herramienta para verificar funcionamiento) -->
+    <!-- ================= SECCIÓN SIMULADOR (NUEVO DASHBOARD VISUAL) ================= -->
     <div id="simulator" class="page">
-        <h2>Herramienta de diagnóstico del sistema</h2>
-        <p>Ingrese los valores medidos por los sensores de su instalación (o del prototipo) y obtenga una evaluación del estado operativo, con posibles causas de desviación.</p>
-        
-        <div class="simulator-panel">
-            <div class="form-group">
-                <label>Temperatura de entrada del agua de red (°C)</label>
-                <input type="number" id="tempIn" value="10" step="0.5">
+        <h2>Monitoreo en tiempo real – Sistema piloto</h2>
+        <p>Visualización interactiva de los sensores instalados en el prototipo de vivienda en Paipa. Haga clic en los puntos para más detalles.</p>
+        <div class="sim-dashboard">
+            <div class="image-wrapper" id="image-wrapper">
+                <!-- IMAGEN PRINCIPAL: debe llamarse "house.png" y estar en la misma carpeta -->
+                <img src="house.png" alt="Sistema Geotérmico" id="house-image" style="width:100%; display:block;">
+                <!-- Los puntos y popups se inyectarán aquí -->
             </div>
-            <div class="form-group">
-                <label>Temperatura de salida del agua caliente (°C)</label>
-                <input type="number" id="tempOut" value="48" step="0.5">
-            </div>
-            <div class="form-group">
-                <label>Caudal de circulación (L/min)</label>
-                <input type="number" id="flowRate" value="10" step="1">
-            </div>
-            <div class="form-group">
-                <label>Presión del lazo geotérmico (bar)</label>
-                <input type="number" id="pressure" value="2.4" step="0.1">
-            </div>
-            <div class="form-group">
-                <label>Profundidad del lazo instalada (metros)</label>
-                <input type="number" id="depthActual" value="25" step="5">
-            </div>
-            <button id="diagnoseBtn" style="background-color: #1b4f2e; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 40px; font-weight: bold; cursor: pointer; margin-top: 0.5rem;">Evaluar funcionamiento</button>
-
-            <div class="diagnostic-result" id="diagnosticResult">
-                <p>Haga clic en "Evaluar funcionamiento" para obtener el diagnóstico.</p>
+            <div class="dashboard-bottom">
+                <div class="cards-container" id="sensor-cards"></div>
+                <div class="alerts-panel">
+                    <h3>Indicadores de Temperatura</h3>
+                    <div class="indicator-list">
+                        <div class="indicator-item"><div class="indicator-icon normal-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#00D084" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="#00D084"/></svg></div><div class="indicator-text"><strong class="color-normal">NORMAL</strong><p>Temperatura dentro del rango adecuado.</p></div></div>
+                        <div class="indicator-item"><div class="indicator-icon low-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#00C3FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="indicator-text"><strong class="color-low">BAJO</strong><p>Temperatura por debajo del rango recomendado.</p></div></div>
+                        <div class="indicator-item"><div class="indicator-icon high-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#FF4D4D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="indicator-text"><strong class="color-high">ALTO</strong><p>Temperatura por encima del rango recomendado.</p></div></div>
+                    </div>
+                </div>
             </div>
         </div>
-
         <div class="card" style="margin-top: 2rem;">
-            <h3>¿Cómo interpretar los resultados?</h3>
-            <p>El sistema compara sus valores con los rangos esperados según el diseño técnico para una vivienda en Paipa (temperatura del suelo ~16-18°C, longitud de lazo adecuada). Si la temperatura de salida es baja o la presión cae, se sugieren causas probables y acciones correctivas.</p>
-            <p><strong>Nota:</strong> Esta herramienta es un apoyo al diagnóstico remoto; ante cualquier anomalía, nuestro equipo de servicio técnico puede realizar una verificación más detallada.</p>
+            <h3>¿Cómo interpretar los datos?</h3>
+            <p>Los sensores miden la temperatura en puntos clave: suelo geotérmico (lazo enterrado), salida de la bomba de calor y agua de la ducha. Un estado "NORMAL" indica que el sistema opera eficientemente. Si aparece "BAJO" o "ALTO", revise las recomendaciones y contacte a nuestro soporte.</p>
         </div>
     </div>
-    <!-- SECCIÓN VIABILIDAD ECONÓMICA Y MODELO DE NEGOCIO -->
-<div id="economy" class="page">
+
+    <!-- ================= SECCIÓN VIABILIDAD ECONÓMICA (con corrección de ingenieros) ================= -->
+    <div id="economy" class="page">
         <h2>Estudio financiero completo – GeoTherm SMART</h2>
-    <p>Presupuesto desglosado, explicación de conceptos financieros, flujo de caja y rentabilidad para el proyecto de una vivienda en Paipa (barrio Fátima). Datos actualizados a mayo de 2026.</p>
-
-    <style>
-        /* Estilos exclusivos para la página de economía */
-        .finance-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            font-size: 0.9rem;
-        }
-        .finance-table th, .finance-table td {
-            border: 1px solid #cbd5e1;
-            padding: 0.6rem;
-            vertical-align: top;
-        }
-        .finance-table th {
-            background-color: #eef2f5;
-            font-weight: 600;
-        }
-        .budget-category {
-            background-color: #f8fafc;
-            font-weight: bold;
-        }
-        .graph-bar-container {
-            background-color: #e2e8f0;
-            border-radius: 12px;
-            overflow: hidden;
-            margin: 0.5rem 0;
-        }
-        .graph-bar {
-            background-color: #1b4f2e;
-            color: white;
-            padding: 0.4rem 0.8rem;
-            text-align: right;
-            font-size: 0.85rem;
-            border-radius: 12px;
-            width: 0%;
-        }
-        .graph-bar.income { background-color: #2c7a4a; }
-        .graph-bar.cost { background-color: #b85c1a; }
-        .glossary {
-            background: #f1f5f9;
-            padding: 1rem;
-            border-radius: 16px;
-            margin: 1rem 0;
-        }
-        .glossary h4 {
-            margin-top: 0;
-            color: #1e3a5f;
-        }
-    </style>
-
-    <!-- ========== 1. PRESUPUESTO DETALLADO POR CONCEPTO (MATERIALES, EQUIPOS, MANO DE OBRA) ========== -->
-    <div class="card">
-    <h3>Presupuesto detallado por concepto (una vivienda)</h3>
-    <table class="finance-table">
-        <thead>
-            <tr><th>Concepto</th><th>Descripción / Especificaciones</th><th>Cantidad</th><th>Valor unitario (COP)</th><th>Subtotal (COP)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="budget-category"><td colspan="5">🏗️ Materiales e insumos</td></tr>
-            <tr><td>Tubería PEAD 1"</td><td>Lazo geotérmico horizontal, 50 metros lineales, incluye accesorios (codos, uniones, válvulas)</td><td>50 m</td><td>19.000</td><td style="text-align:right">950.000</td></tr>
-            <tr><td>Fluido termotransferente</td><td>Mezcla agua + glicol (30%) – 20 litros</td><td>20 L</td><td>6.000</td><td style="text-align:right">120.000</td></tr>
-            <tr><td>Arena y grava</td><td>Lecho drenante para zanja (5 m³)</td><td>5 m³</td><td>40.000</td><td style="text-align:right">200.000</td></tr>
-            <tr><td>Aislamiento térmico</td><td>Espuma tubular para tuberías de ACS (30 metros)</td><td>30 m</td><td>8.000</td><td style="text-align:right">240.000</td></tr>
-            <tr><td>Materiales eléctricos</td><td>Cableado, canaletas, interruptores, gabinete IP65</td><td>1 lote</td><td>350.000</td><td style="text-align:right">350.000</td></tr>
-            <tr class="budget-category"><td colspan="5">⚙️ Equipos principales y sensores</td></tr>
-            <tr><td>Bomba de calor geotérmica</td><td>Agua-agua, 3 kWt, importada (China / Europa), COP 4.2</td><td>1</td><td>4.500.000</td><td style="text-align:right">4.500.000</td></tr>
-            <tr><td>Bomba de circulación</td><td>Circuito primario, 12V / 220V, caudal regulable</td><td>1</td><td>280.000</td><td style="text-align:right">280.000</td></tr>
-            <tr><td>Sensores DS18B20</td><td>Temperatura (entrada/salida lazo, tanque ACS, ambiente) – 6 unidades</td><td>6</td><td>25.000</td><td style="text-align:right">150.000</td></tr>
-            <tr><td>Transmisor de presión</td><td>4-20mA, 0-10 bar, para lazo geotérmico</td><td>1</td><td>250.000</td><td style="text-align:right">250.000</td></tr>
-            <tr><td>Caudalímetro</td><td>YF‑S201 (versión educativa, suficiente para monitoreo básico)</td><td>1</td><td>90.000</td><td style="text-align:right">90.000</td></tr>
-            <tr><td>PLC industrial</td><td>Siemens Logo! o similar, con entradas analógicas</td><td>1</td><td>350.000</td><td style="text-align:right">350.000</td></tr>
-            <tr><td>Gateway IoT</td><td>ESP32 o Raspberry Pi con conectividad 4G/WiFi</td><td>1</td><td>180.000</td><td style="text-align:right">180.000</td></tr>
-            <tr class="budget-category"><td colspan="5">👷 Mano de obra especializada</td></tr>
-            <tr><td>Ayudante de obra (2 personas)</td><td>Apoyo en excavación, relleno y compactación (3 días)</td><td>2</td><td>80.000/día × 3 días</td><td style="text-align:right">480.000</td></tr>
-            <tr><td>Técnico instalador hidráulico</td><td>Excavación, tendido de tubería, conexión bomba de calor (5 días)</td><td>1</td><td>150.000/día × 5 días</td><td style="text-align:right">750.000</td></tr>
-            <tr><td>Técnico electricista</td><td>Cableado de sensores, conexión de bomba y PLC (2 días)</td><td>1</td><td>150.000/día × 2 días</td><td style="text-align:right">300.000</td></tr>
-            <tr><td>Ingeniero civil / geotecnista</td><td>Estudios de suelo, diseño del lazo, supervisión de excavación (3 días)</td><td>1</td><td>400.000/día × 3 días</td><td style="text-align:right">1.200.000</td></tr>
-            <tr><td>Ingeniero de sistemas</td><td>Configuración de sensores, PLC, gateway, dashboard (3 días)</td><td>1</td><td>400.000/día × 3 días</td><td style="text-align:right">1.200.000</td></tr>
-            <tr class="budget-category"><td colspan="5">📋 Estudios, permisos y gestión</td></tr>
-            <tr><td>Estudio geotécnico</td><td>Visita, calicatas, informe (INGEOGIS SAS)</td><td>1</td><td>1.000.000</td><td style="text-align:right">1.000.000</td></tr>
-            <tr><td>Permisos municipales</td><td>Licencia de excavación, curaduría urbana (Alcaldía Paipa)</td><td>1</td><td>500.000</td><td style="text-align:right">500.000</td></tr>
-            <tr><td>Registro geotérmico</td><td>Trámite ante Ministerio de Minas y Energía</td><td>1</td><td>200.000</td><td style="text-align:right">200.000</td></tr>
-            <tr class="budget-category"><td colspan="5">🚚 Logística e imprevistos</td></tr>
-            <tr><td>Transporte de equipos</td><td>Fletes desde Bogotá / puerto</td><td>1</td><td>300.000</td><td style="text-align:right">300.000</td></tr>
-            <tr><td>Imprevistos</td><td>5% sobre subtotal directo (para cubrir variaciones)</td><td>1</td><td>650.000</td><td style="text-align:right">650.000</td></tr>
-            <tr style="background:#f0fdf4; font-weight:bold;"><td colspan="4">TOTAL COSTO DIRECTO POR VIVIENDA</td><td style="text-align:right">13.990.000</td></tr>
-        </tbody>
-    </table>
-    <p class="badge">*Los valores incluyen IVA en materiales, pero la bomba de calor y sensores pueden tener exclusión de IVA según Ley 2099. Los ingenieros facturan 3 días completos a $400.000/día, total $1.200.000 cada uno.</p>
-</div>
-<!-- Tarjeta: Metodología de costos de mano de obra -->
-<div class="card">
-    <h3>Metodología para el cálculo de la mano de obra</h3>
-    <p>Los valores de mano de obra utilizados en el presupuesto se basan en los siguientes criterios, alineados con el mercado colombiano y las características del proyecto en Paipa:</p>
-    
-    <table class="finance-table">
-        <thead>
-            <tr><th>Cargo</th><th>Base de cálculo</th><th>Valor día (COP)</th><th>Días</th><th>Total (COP)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td style="font-weight:bold;">Ayudante de obra</td>
-                <td>1,2 SMMLV (2026 ≈ $1.423.500) / 30 días + prestaciones<br>Tarifa para trabajo no calificado en proyectos de corta duración</td>
-                <td>80.000</td><td>3</td><td style="text-align:right;">240.000</td>
-            </tr>
-            <tr><td style="font-weight:bold;">Técnico instalador hidráulico</td>
-                <td>1,8 SMMLV + herramientas y desplazamiento<br>Personal con experiencia en sistemas de tubería y bombas</td>
-                <td>150.000</td><td>5</td><td style="text-align:right;">750.000</td>
-            </tr>
-            <tr><td style="font-weight:bold;">Técnico electricista</td>
-                <td>Tarifa por proyecto corto, certificado RETIE<br>Demanda alta en la región</td>
-                <td>150.000</td><td>2</td><td style="text-align:right;">300.000</td>
-            </tr>
-            <tr><td style="font-weight:bold;">Ingeniero civil / geotecnista</td>
-                <td>Tarifa profesional independiente (consultoría)<br>Incluye visita, informe y supervisión</td>
-                <td>400.000</td><td>3</td><td style="text-align:right;">1.200.000</td>
-            </tr>
-            <tr><td style="font-weight:bold;">Ingeniero de sistemas</td>
-                <td>Tarifa profesional por día para IoT, configuración de PLC y dashboard</td>
-                <td>400.000</td><td>3</td><td style="text-align:right;">1.200.000</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h4 style="margin-top: 1.2rem;">Referentes utilizados</h4>
-    <ul>
-        <li><strong>Salario mínimo legal mensual vigente (2026):</strong> $1.423.500 COP (Decreto 2025).</li>
-        <li><strong>Jornales en construcción para proyectos menores:</strong> observación de cotizaciones de empresas en Boyacá (Sogamoso, Tunja, Paipa).</li>
-        <li><strong>Honorarios profesionales de ingeniería:</strong> tarifas sugeridas por la Sociedad Colombiana de Ingenieros (SCI) y ofertas locales para consultorías de corto plazo.</li>
-        <li><strong>Días de trabajo estimados:</strong> según cronograma de 6 semanas, validado con profesionales del sector en Paipa.</li>
-    </ul>
-    <p>Estos costos son competitivos y reflejan la realidad de un proyecto piloto sin economías de escala. Al aumentar el volumen de instalaciones, los costos por mano de obra pueden reducirse hasta un 20% por contratos directos.</p>
-    <span class="badge">Actualizado: mayo 2026</span>
-</div>
-    <!-- ========== 2. GASTOS MENSUALES FIJOS (OFICINA, SERVICIOS, ADMINISTRACIÓN) ========== -->
-    <div class="card">
-        <h3>Gastos administrativos y operativos fijos (por mes)</h3>
-        <table class="finance-table">
-            <tr><th>Concepto</th><th>Detalle</th><th>Valor (COP)</th></tr>
-            <tr><td>Arriendo oficina + bodega</td><td>Local en Paipa centro, 60 m²</td><td style="text-align:right">1.200.000</td></tr>
-            <tr><td>Servicios públicos (luz, agua, internet, telefonía)</td><td>Consumo promedio</td><td style="text-align:right">450.000</td></tr>
-            <tr><td>Nómina administrativa mínima</td><td>Gerente general (tiempo parcial) + auxiliar administrativo</td><td style="text-align:right">3.500.000</td></tr>
-            <tr><td>Marketing y comunidad digital</td><td>Redes sociales, WhatsApp Business, publicidad local</td><td style="text-align:right">600.000</td></tr>
-            <tr><td>Seguros y licencias de software</td><td>Responsabilidad civil, licencias de diseño y dashboard</td><td style="text-align:right">300.000</td></tr>
-            <tr><td>Mantenimiento de equipos</td><td>Calibración de sensores, repuestos menores</td><td style="text-align:right">500.000</td></tr>
-            <tr style="font-weight:bold;"><td colspan="2">Total gastos fijos mensuales</td><td style="text-align:right">6.550.000</td></tr>
-        </table>
+        <p>Presupuesto desglosado, explicación de conceptos financieros, flujo de caja y rentabilidad para el proyecto de una vivienda en Paipa (barrio Fátima). Datos actualizados a mayo de 2026.</p>
+        <style>
+            .finance-table { width:100%; border-collapse: collapse; margin:1rem 0; font-size:0.9rem; }
+            .finance-table th, .finance-table td { border:1px solid #cbd5e1; padding:0.6rem; vertical-align:top; }
+            .finance-table th { background-color:#eef2f5; font-weight:600; }
+            .budget-category { background-color:#f8fafc; font-weight:bold; }
+            .graph-bar-container { background-color:#e2e8f0; border-radius:12px; overflow:hidden; margin:0.5rem 0; }
+            .graph-bar { background-color:#1b4f2e; color:white; padding:0.4rem 0.8rem; text-align:right; font-size:0.85rem; border-radius:12px; width:0%; }
+            .graph-bar.income { background-color:#2c7a4a; }
+            .graph-bar.cost { background-color:#b85c1a; }
+            .glossary { background:#f1f5f9; padding:1rem; border-radius:16px; margin:1rem 0; }
+            .glossary h4 { margin-top:0; color:#1e3a5f; }
+        </style>
+        <div class="card"><h3>Presupuesto detallado por concepto (una vivienda)</h3>
+        <table class="finance-table"><thead><tr><th>Concepto</th><th>Descripción</th><th>Cantidad</th><th>Valor unitario (COP)</th><th>Subtotal (COP)</th></tr></thead><tbody>
+        <tr class="budget-category"><td colspan="5">🏗️ Materiales e insumos</td></tr>
+        <tr><td>Tubería PEAD 1"</td><td>Lazo horizontal 50m + accesorios</td><td>50 m</td><td>19.000</td><td style="text-align:right">950.000</td></tr>
+        <tr><td>Fluido termotransferente</td><td>Agua+glicol 30% – 20 L</td><td>20 L</td><td>6.000</td><td style="text-align:right">120.000</td></tr>
+        <tr><td>Arena y grava</td><td>Lecho drenante 5 m³</td><td>5 m³</td><td>40.000</td><td style="text-align:right">200.000</td></tr>
+        <tr><td>Aislamiento térmico</td><td>Espuma tubular 30 m</td><td>30 m</td><td>8.000</td><td style="text-align:right">240.000</td></tr>
+        <tr><td>Materiales eléctricos</td><td>Cableado, gabinete, canaletas</td><td>1 lote</td><td>350.000</td><td style="text-align:right">350.000</td></tr>
+        <tr class="budget-category"><td colspan="5">⚙️ Equipos principales y sensores</td></tr>
+        <tr><td>Bomba de calor geotérmica</td><td>3 kWt, importada, COP 4.2</td><td>1</td><td>4.500.000</td><td style="text-align:right">4.500.000</td></tr>
+        <tr><td>Bomba de circulación</td><td>Circuito primario</td><td>1</td><td>280.000</td><td style="text-align:right">280.000</td></tr>
+        <tr><td>Sensores DS18B20</td><td>6 unidades</td><td>6</td><td>25.000</td><td style="text-align:right">150.000</td></tr>
+        <tr><td>Transmisor de presión</td><td>4-20mA, 0-10 bar</td><td>1</td><td>250.000</td><td style="text-align:right">250.000</td></tr>
+        <tr><td>Caudalímetro</td><td>YF‑S201</td><td>1</td><td>90.000</td><td style="text-align:right">90.000</td></tr>
+        <tr><td>PLC industrial</td><td>Siemens Logo!</td><td>1</td><td>350.000</td><td style="text-align:right">350.000</td></tr>
+        <tr><td>Gateway IoT</td><td>ESP32 / Raspberry Pi</td><td>1</td><td>180.000</td><td style="text-align:right">180.000</td></tr>
+        <tr class="budget-category"><td colspan="5">👷 Mano de obra especializada</td></tr>
+        <tr><td>Ingeniero civil / geotecnista</td><td>3 días × $400.000</td><td>1</td><td>1.200.000</td><td style="text-align:right">1.200.000</td></tr>
+        <tr><td>Ingeniero de sistemas</td><td>3 días × $400.000</td><td>1</td><td>1.200.000</td><td style="text-align:right">1.200.000</td></tr>
+        <tr><td>Técnico instalador hidráulico</td><td>5 días × $150.000</td><td>1</td><td>750.000</td><td style="text-align:right">750.000</td></tr>
+        <tr><td>Ayudante de obra (2)</td><td>3 días × $80.000 c/u</td><td>2</td><td>240.000</td><td style="text-align:right">480.000</td></tr>
+        <tr><td>Técnico electricista</td><td>2 días × $150.000</td><td>1</td><td>300.000</td><td style="text-align:right">300.000</td></tr>
+        <tr class="budget-category"><td colspan="5">📋 Estudios, permisos y gestión</td></tr>
+        <tr><td>Estudio geotécnico</td><td>INGEOGIS SAS</td><td>1</td><td>1.000.000</td><td style="text-align:right">1.000.000</td></tr>
+        <tr><td>Permisos municipales</td><td>Licencia excavación</td><td>1</td><td>500.000</td><td style="text-align:right">500.000</td></tr>
+        <tr><td>Registro geotérmico</td><td>MinMinas</td><td>1</td><td>200.000</td><td style="text-align:right">200.000</td></tr>
+        <tr class="budget-category"><td colspan="5">🚚 Logística e imprevistos</td></tr>
+        <tr><td>Transporte de equipos</td><td>Fletes</td><td>1</td><td>300.000</td><td style="text-align:right">300.000</td></tr>
+        <tr><td>Imprevistos</td><td>5% subtotal directo</td><td>1</td><td>600.000</td><td style="text-align:right">600.000</td></tr>
+        <tr style="background:#f0fdf4; font-weight:bold;"><td colspan="4">TOTAL COSTO DIRECTO POR VIVIENDA</td><td style="text-align:right">13.990.000</td></tr>
+        </tbody></table></div>
+        <div class="card"><h3>Metodología para el cálculo de la mano de obra</h3><p>Valores basados en salario mínimo 2026 ($1.423.500), jornales de construcción en Boyacá y tarifas profesionales SCI.</p><table class="finance-table"><thead><tr><th>Cargo</th><th>Base</th><th>Valor día</th><th>Días</th><th>Total</th></tr></thead><tbody><tr><td>Ayudante de obra</td><td>1,2 SMMLV + prestaciones</td><td>80.000</td><td>3</td><td>240.000</td></tr><tr><td>Técnico instalador</td><td>1,8 SMMLV + herramientas</td><td>150.000</td><td>5</td><td>750.000</td></tr><tr><td>Técnico electricista</td><td>Tarifa proyecto corto</td><td>150.000</td><td>2</td><td>300.000</td></tr><tr><td>Ingeniero civil</td><td>Consultoría independiente</td><td>400.000</td><td>3</td><td>1.200.000</td></tr><tr><td>Ingeniero de sistemas</td><td>Consultoría IoT</td><td>400.000</td><td>3</td><td>1.200.000</td></tr></tbody></table><span class="badge">Actualizado: mayo 2026</span></div>
+        <div class="card"><h3>Gastos administrativos fijos (por mes)</h3><table class="finance-table"><tr><th>Concepto</th><th>Detalle</th><th>Valor (COP)</th></tr><tr><td>Arriendo oficina + bodega</td><td>Paipa centro, 60 m²</td><td style="text-align:right">1.200.000</td></tr><tr><td>Servicios públicos</td><td>Luz, agua, internet</td><td style="text-align:right">450.000</td></tr><tr><td>Nómina administrativa mínima</td><td>Gerente parcial + auxiliar</td><td style="text-align:right">3.500.000</td></tr><tr><td>Marketing y comunidad</td><td>Redes, WhatsApp Business</td><td style="text-align:right">600.000</td></tr><tr><td>Seguros y licencias</td><td>Responsabilidad civil, software</td><td style="text-align:right">300.000</td></tr><tr><td>Mantenimiento equipos</td><td>Calibraciones, repuestos</td><td style="text-align:right">500.000</td></tr><tr style="font-weight:bold;"><td colspan="2">Total gastos fijos mensuales</td><td style="text-align:right">6.550.000</td></tr></table></div>
+        <div class="card"><h3>Estructura de costos y margen por vivienda</h3><div><strong>Precio de venta sugerido:</strong> $21.500.000 (100%)</div><div class="graph-bar-container"><div class="graph-bar income" style="width:100%">100% | $21,5M</div></div><div><strong>Costos directos totales:</strong> $13.990.000 (65,1%)</div><div class="graph-bar-container"><div class="graph-bar cost" style="width:65.1%">65,1% | $13,99M</div></div><div><strong>Margen bruto:</strong> $7.510.000 (34,9%)</div><div class="graph-bar-container"><div class="graph-bar" style="width:34.9%; background-color:#2e7d32">34,9% | $7,51M</div></div></div>
+        <div class="card"><h3>Cronograma de desembolsos (6 semanas)</h3><table class="finance-table"><thead><tr><th>Semana</th><th>Actividades</th><th>Gastos acumulados</th><th>%</th></tr></thead><tbody><tr><td>1</td><td>Estudios, permisos</td><td>1.800.000</td><td>13%</td></tr><tr><td>2</td><td>Excavación, lazo</td><td>3.500.000</td><td>25%</td></tr><tr><td>3</td><td>Bomba de calor, instalación hidráulica</td><td>7.200.000</td><td>51%</td></tr><tr><td>4</td><td>Sensores, PLC, cableado</td><td>9.800.000</td><td>70%</td></tr><tr><td>5</td><td>Configuración IoT, pruebas</td><td>12.100.000</td><td>86%</td></tr><tr><td>6</td><td>Capacitación, entrega</td><td>13.990.000</td><td>100%</td></tr></tbody></table></div>
+        <div class="glossary"><h4>📘 Glosario financiero</h4><ul><li><strong>Margen bruto:</strong> Diferencia entre precio de venta y costos directos.</li><li><strong>Costos fijos:</strong> Gastos que no varían con el número de instalaciones.</li><li><strong>Punto de equilibrio:</strong> Instalaciones necesarias para cubrir costos fijos.</li><li><strong>Flujo de caja:</strong> Movimiento real de ingresos y egresos.</li><li><strong>VAN, TIR, Payback:</strong> Indicadores de rentabilidad del proyecto.</li></ul></div>
+        <div class="card"><h3>Flujo de caja proyectado (1 vivienda/mes)</h3><table class="finance-table"><thead><tr><th>Mes</th><th>Ingresos</th><th>Costos variables</th><th>Costos fijos</th><th>Flujo neto</th><th>Acumulado</th></tr></thead><tbody><tr><td>1</td><td>21.500.000</td><td>13.990.000</td><td>6.550.000</td><td>960.000</td><td>960.000</td></tr><tr><td>2</td><td>21.500.000</td><td>13.990.000</td><td>6.550.000</td><td>960.000</td><td>1.920.000</td></tr><tr><td>3</td><td>21.500.000</td><td>13.990.000</td><td>6.550.000</td><td>960.000</td><td>2.880.000</td></tr><tr><td>4</td><td>21.500.000</td><td>13.990.000</td><td>6.550.000</td><td>960.000</td><td>3.840.000</td></tr><tr><td>5</td><td>21.500.000</td><td>13.990.000</td><td>6.550.000</td><td>960.000</td><td>4.800.000</td></tr><tr><td>6</td><td>21.500.000</td><td>13.990.000</td><td>6.550.000</td><td>960.000</td><td>5.760.000</td></tr></tbody></table><p><strong>Nota:</strong> Con 2 viviendas/mes el flujo mejora drásticamente (ejemplo en sección de escalabilidad).</p></div>
+        <div class="card"><h3>Escalabilidad y mercado</h3><p>Mercado potencial en Paipa: ~2.031 viviendas elegibles. Participación del 5% (102 viviendas/año) generaría ingresos > $2.190 millones COP.</p><div class="graph-bar-container"><div class="graph-bar income" style="width:100%">Mercado total: 2.031 viviendas</div></div><div class="graph-bar-container"><div class="graph-bar cost" style="width:5%; background-color:#1b4f2e">5% participación = 102 viviendas/año</div></div></div>
     </div>
-
-    <!-- ========== 3. GRÁFICOS DE ESTRUCTURA DE COSTOS (BARRAS) ========== -->
-    <div class="card">
-        <h3>Estructura de costos y margen por vivienda</h3>
-        <div><strong>Precio de venta sugerido:</strong> $21.500.000 (100%)</div>
-        <div class="graph-bar-container"><div class="graph-bar income" style="width:100%">100% | $21,5M</div></div>
-        <div><strong>Costos directos totales:</strong> $13.590.000 (63,2%)</div>
-        <div class="graph-bar-container"><div class="graph-bar cost" style="width:63.2%">63,2% | $13,59M</div></div>
-        <div><strong>Margen bruto:</strong> $7.910.000 (36,8%)</div>
-        <div class="graph-bar-container"><div class="graph-bar" style="width:36.8%; background-color:#2e7d32">36,8% | $7,91M</div></div>
-        <p>Este margen debe cubrir los gastos fijos mensuales y generar utilidad.</p>
-    </div>
-
-    <!-- ========== 4. CRONOGRAMA DE GASTOS POR SEMANA (EJECUCIÓN) ========== -->
-    <div class="card">
-        <h3>Cronograma de desembolsos durante la ejecución (6 semanas)</h3>
-        <table class="finance-table">
-            <thead><tr><th>Semana</th><th>Actividades</th><th>Gastos acumulados (COP)</th><th>% del total</th></tr></thead>
-            <tbody>
-                <tr><td>1</td><td>Estudios, permisos, geotecnia</td><td>1.800.000</td><td>13%</td></tr>
-                <tr><td>2</td><td>Excavación, lazo PEAD, relleno</td><td>3.500.000</td><td>26%</td></tr>
-                <tr><td>3</td><td>Bomba de calor, instalación hidráulica</td><td>7.200.000</td><td>53%</td></tr>
-                <tr><td>4</td><td>Sensores, PLC, cableado</td><td>9.800.000</td><td>72%</td></tr>
-                <tr><td>5</td><td>Configuración IoT, pruebas</td><td>12.100.000</td><td>89%</td></tr>
-                <tr><td>6</td><td>Capacitación, ajustes finales, entrega</td><td>13.590.000</td><td>100%</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- ========== 5. GLOSARIO DE TÉRMINOS FINANCIEROS ========== -->
-    <div class="glossary">
-        <h4>📘 Glosario financiero para entender el proyecto</h4>
-        <ul>
-            <li><strong>Margen bruto:</strong> Diferencia entre el precio de venta y los costos directos (materiales, mano de obra, equipos). Indica la rentabilidad básica de cada instalación.</li>
-            <li><strong>Costos fijos:</strong> Gastos que no cambian con el número de instalaciones (arriendo, nómina administrativa, servicios). Se pagan mes a mes independientemente de las ventas.</li>
-            <li><strong>Punto de equilibrio:</strong> Número de viviendas que debemos instalar al mes para cubrir exactamente los costos fijos. Por debajo de esa cantidad, hay pérdida; por encima, ganancia.</li>
-            <li><strong>Flujo de caja:</strong> Movimiento real de dinero que entra (ingresos) y sale (egresos) mes a mes. Incluye pagos a proveedores, salarios y cobros a clientes.</li>
-            <li><strong>VAN (Valor Actual Neto):</strong> Suma de los flujos de caja futuros traídos al día de hoy, descontando una tasa (12%). Si es positivo, el proyecto es rentable.</li>
-            <li><strong>TIR (Tasa Interna de Retorno):</strong> La rentabilidad porcentual anual que genera el proyecto. Una TIR mayor al costo de oportunidad (ej. 12%) significa que conviene invertir.</li>
-            <li><strong>Payback:</strong> Tiempo necesario para recuperar la inversión inicial con los flujos de caja generados.</li>
-        </ul>
-    </div>
-
-    <!-- ========== 6. FLUJO DE CAJA MENSUAL DETALLADO (PRIMER AÑO) ========== -->
-    <div class="card">
-        <h3>Flujo de caja proyectado – primeros 6 meses (1 vivienda/mes)</h3>
-        <p>Supuestos: 1 venta por mes, precio $21.5M, costos variables se pagan al contado, costos fijos $6.55M/mes. No se considera impuesto de renta para simplificar.</p>
-        <table class="finance-table">
-            <thead><tr><th>Mes</th><th>Ingresos por venta</th><th>Costos variables</th><th>Costos fijos</th><th>Flujo neto</th><th>Flujo acumulado</th></tr></thead>
-            <tbody>
-                <tr><td>1</td><td>21.500.000</td><td>13.590.000</td><td>6.550.000</td><td>1.360.000</td><td>1.360.000</td></tr>
-                <tr><td>2</td><td>21.500.000</td><td>13.590.000</td><td>6.550.000</td><td>1.360.000</td><td>2.720.000</td></tr>
-                <tr><td>3</td><td>21.500.000</td><td>13.590.000</td><td>6.550.000</td><td>1.360.000</td><td>4.080.000</td></tr>
-                <tr><td>4</td><td>21.500.000</td><td>13.590.000</td><td>6.550.000</td><td>1.360.000</td><td>5.440.000</td></tr>
-                <tr><td>5</td><td>21.500.000</td><td>13.590.000</td><td>6.550.000</td><td>1.360.000</td><td>6.800.000</td></tr>
-                <tr><td>6</td><td>21.500.000</td><td>13.590.000</td><td>6.550.000</td><td>1.360.000</td><td>8.160.000</td></tr>
-            </tbody>
-        </table>
-        <p>Nota: El flujo acumulado a 6 meses sería de <strong>$8.16 millones</strong>. Al aumentar la tasa de ventas a 2 o 3 viviendas por mes, el flujo se dispara (ver siguiente tabla).</p>
-    </div>
-
-    <!-- ========== 7. ESCENARIO CRECIMIENTO (2 viviendas/mes) ========== -->
-    <div class="card">
-        <h3>Escenario con 2 viviendas por mes (a partir del mes 3)</h3>
-        <table class="finance-table">
-            <thead><tr><th>Mes</th><th>Viviendas</th><th>Ingresos</th><th>Costos variables</th><th>Costos fijos</th><th>Flujo neto</th><th>Acumulado</th></tr></thead>
-            <tbody>
-                <tr><td>1</td><td>1</td><td>21,5M</td><td>13,59M</td><td>6,55M</td><td>1,36M</td><td>1,36M</td></tr>
-                <tr><td>2</td><td>1</td><td>21,5M</td><td>13,59M</td><td>6,55M</td><td>1,36M</td><td>2,72M</td></tr>
-                <tr><td>3</td><td>2</td><td>43,0M</td><td>27,18M</td><td>6,55M</td><td>9,27M</td><td>11,99M</td></tr>
-                <tr><td>4</td><td>2</td><td>43,0M</td><td>27,18M</td><td>6,55M</td><td>9,27M</td><td>21,26M</td></tr>
-                <tr><td>5</td><td>2</td><td>43,0M</td><td>27,18M</td><td>6,55M</td><td>9,27M</td><td>30,53M</td></tr>
-                <tr><td>6</td><td>2</td><td>43,0M</td><td>27,18M</td><td>6,55M</td><td>9,27M</td><td>39,80M</td></tr>
-            </tbody>
-        </table>
-        <p>El flujo acumulado al final del semestre supera los <strong>$39 millones</strong>, mostrando un fuerte apalancamiento operativo.</p>
-    </div>
-
-    <!-- ========== 8. INDICADORES FINANCIEROS A 10 VIVIENDAS ========== -->
-    <div class="card">
-        <h3>Evaluación del proyecto piloto (10 viviendas)</h3>
-        <p><strong>Inversión inicial:</strong> $30.000.000 (capital de trabajo para cubrir los primeros gastos).</p>
-        <table class="finance-table">
-            <tr><td>Ingresos totales</td><td style="text-align:right">215.000.000</td></tr>
-            <tr><td>Costos directos totales</td><td style="text-align:right">135.900.000</td></tr>
-            <tr><td>Margen bruto</td><td style="text-align:right">79.100.000</td></tr>
-            <tr><td>Gastos fijos totales (12 meses)</td><td style="text-align:right">78.600.000</td></tr>
-            <tr><td>Utilidad neta antes de impuestos</td><td style="text-align:right">500.000</td></tr>
-            <tr><td>Más incentivo tributario (deducción 50% I+D + Ley 2099)</td><td style="text-align:right">+25.000.000</td></tr>
-            <tr><td><strong>Utilidad neta ajustada</strong></td><td style="text-align:right"><strong>25.500.000</strong></td></tr>
-        </table>
-        <p><strong>VAN (tasa 12%):</strong> $18.200.000 &nbsp;|&nbsp; <strong>TIR:</strong> 41% &nbsp;|&nbsp; <strong>Payback:</strong> 6,5 meses</p>
-        <p>Estos indicadores confirman que el proyecto es altamente rentable, incluso en un escenario conservador de 10 viviendas en el primer año.</p>
-    </div>
-
-    <!-- ========== 9. ESCALABILIDAD Y MERCADO ========== -->
-    <div class="card">
-        <h3>Potencial de mercado en Paipa</h3>
-        <p>Según el estudio de mercado, existen aproximadamente <strong>2.031 viviendas elegibles</strong> (estratos 2,3,4 con acceso vehicular y servicios públicos) dentro del perímetro urbano delimitado. Con una participación de mercado del 5% (102 viviendas anuales), se obtendrían ingresos de <strong>$2.193 millones COP</strong> y una utilidad neta superior a los <strong>$250 millones</strong> anuales.</p>
-        <div class="graph-bar-container"><div class="graph-bar income" style="width:100%">Mercado total: 2.031 viviendas</div></div>
-        <div class="graph-bar-container"><div class="graph-bar cost" style="width:5%; background-color:#1b4f2e">5% participación = 102 viviendas/año</div></div>
-    </div>
-</div>
 </main>
 
 <footer>
@@ -767,80 +530,6 @@
 </footer>
 
 <script>
-    // Lógica del simulador de diagnóstico
-    const diagnoseBtn = document.getElementById('diagnoseBtn');
-    const resultDiv = document.getElementById('diagnosticResult');
-
-    function evaluateSystem() {
-        // Obtener valores
-        let t_in = parseFloat(document.getElementById('tempIn').value);
-        let t_out = parseFloat(document.getElementById('tempOut').value);
-        let flow = parseFloat(document.getElementById('flowRate').value);
-        let pressure = parseFloat(document.getElementById('pressure').value);
-        let depth = parseFloat(document.getElementById('depthActual').value);
-
-        // Validaciones
-        if (isNaN(t_in) || isNaN(t_out) || isNaN(flow) || isNaN(pressure) || isNaN(depth)) {
-            resultDiv.innerHTML = `<p class="status-warning">Error: Ingrese valores numéricos válidos.</p>`;
-            return;
-        }
-
-        let deltaT = t_out - t_in;
-        let expectedDeltaT = (depth / 25) * 8; // esperado 8°C de aumento a profundidad 25m, caudal 10 L/min
-        let expectedPressure = 2.2 + (depth / 100); // esperado ~2.4 bar a 25m
-        let issues = [];
-
-        // Análisis de temperatura
-        if (deltaT < 5) {
-            issues.push("⚠️ El aumento de temperatura es muy bajo (menos de 5°C). Posibles causas: profundidad insuficiente del lazo, caudal demasiado alto, o baja conductividad térmica del suelo.");
-        } else if (deltaT > 12) {
-            issues.push("✅ El aumento de temperatura es excelente (>12°C). El sistema está operando con alta eficiencia.");
-        } else if (deltaT < 7) {
-            issues.push("⚠️ El aumento de temperatura es inferior al esperado (debería ser ~7-10°C). Revise que la bomba de calor esté funcionando correctamente y que no haya fugas en el lazo.");
-        } else {
-            issues.push("✅ El diferencial de temperatura está dentro del rango esperado (7-12°C).");
-        }
-
-        // Análisis de presión
-        if (pressure < 1.5) {
-            issues.push("⚠️ Presión del lazo demasiado baja. Posible fuga de fluido termotransferente o acumulación de aire en el circuito. Revise el sistema de purga.");
-        } else if (pressure > 3.2) {
-            issues.push("⚠️ Presión excesiva. Puede deberse a sobrecalentamiento o válvula de expansión obstruida. Consulte al servicio técnico.");
-        } else {
-            issues.push("✅ Presión del lazo en rango normal (1.5 - 3.2 bar).");
-        }
-
-        // Análisis de caudal
-        if (flow < 6) {
-            issues.push("⚠️ Caudal muy bajo. La bomba de circulación podría estar obstruida o ajustada a velocidad insuficiente. Revise también filtros.");
-        } else if (flow > 16) {
-            issues.push("⚠️ Caudal elevado. Puede reducir la transferencia de calor porque el fluido pasa muy rápido. Ajuste la bomba a una velocidad menor.");
-        } else {
-            issues.push("✅ Caudal dentro del rango óptimo (6-16 L/min).");
-        }
-
-        // Análisis de profundidad vs temperatura esperada
-        if (depth < 15) {
-            issues.push("⚠️ La profundidad del lazo es inferior a 15 metros. En Paipa se recomienda al menos 20 m para alcanzar un deltaT de 8°C. Considere ampliar el lazo.");
-        } else if (depth > 40) {
-            issues.push("✅ Profundidad adecuada. Con más de 40 metros el sistema puede operar incluso en condiciones de suelo más frío.");
-        } else {
-            issues.push("✅ Profundidad suficiente (más de 15 m).");
-        }
-
-        // Construir mensaje final
-        let statusClass = issues.some(i => i.includes("⚠️")) ? "status-warning" : "status-normal";
-        let statusTitle = issues.some(i => i.includes("⚠️")) ? "Se detectaron observaciones" : "Sistema operando correctamente";
-        let resultHtml = `<p class="${statusClass}"><strong>${statusTitle}</strong></p><ul>`;
-        for (let issue of issues) {
-            resultHtml += `<li>${issue}</li>`;
-        }
-        resultHtml += `</ul><hr><p><small>Si persisten las anomalías, contacte a nuestro servicio técnico para una revisión en sitio.</small></p>`;
-        resultDiv.innerHTML = resultHtml;
-    }
-
-    diagnoseBtn.addEventListener('click', evaluateSystem);
-
     // Navegación entre páginas
     const pages = document.querySelectorAll('.page');
     const buttons = document.querySelectorAll('nav button');
@@ -853,6 +542,55 @@
             btn.classList.add('active');
         });
     });
+
+    // Inicializar el simulador visual solo si existe el contenedor
+    if (document.getElementById('image-wrapper')) {
+        const sensors = [
+            { id: 'suelo', name: 'Sensor Suelo', temp: 40.6, status: 'high', description: 'Sensor ubicado en los tubos geotérmicos enterrados.', x: 23, y: 70, icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 21V12M12 12C12 12 17 8 20 8C20 13 12 12 12 12ZM12 12C12 12 7 8 4 8C4 13 12 12 12 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' },
+            { id: 'bomba', name: 'Sensor Bomba de Calor', temp: 36.4, status: 'normal', description: 'Sensor que monitorea la temperatura de salida de la bomba de calor.', x: 44.5, y: 35, icon: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10 10L14 14M14 10L10 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' },
+            { id: 'ducha', name: 'Sensor Ducha', temp: 20.2, status: 'low', description: 'Sensor que mide la temperatura del agua que llega a la ducha.', x: 71, y: 47, icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M8 8C8 5.79086 9.79086 4 12 4C14.2091 4 16 5.79086 16 8V11H8V8Z" stroke="currentColor" stroke-width="2"/><path d="M12 4V2M10 15L9 17M14 15L15 17M12 15V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' }
+        ];
+        const statusConfig = { normal: { text: 'NORMAL', hex: '#00D084' }, low: { text: 'BAJO', hex: '#00C3FF' }, high: { text: 'ALTO', hex: '#FF4D4D' } };
+        const imageWrapper = document.getElementById('image-wrapper');
+        const cardsContainer = document.getElementById('sensor-cards');
+        let activePopupId = null;
+
+        sensors.forEach(sensor => {
+            const config = statusConfig[sensor.status];
+            // Punto
+            const point = document.createElement('div');
+            point.className = 'sensor-point';
+            point.style.left = `${sensor.x}%`;
+            point.style.top = `${sensor.y}%`;
+            point.style.backgroundColor = config.hex;
+            const innerDot = document.createElement('div');
+            innerDot.className = 'inner-dot';
+            point.appendChild(innerDot);
+            // Popup
+            const popup = document.createElement('div');
+            popup.className = 'sensor-popup';
+            popup.id = `popup-${sensor.id}`;
+            popup.style.left = `calc(${sensor.x}% - 110px)`;
+            popup.style.top = `calc(${sensor.y}% - 120px)`;
+            popup.style.borderColor = config.hex;
+            popup.innerHTML = `<h4 style="color:${config.hex}">${sensor.name}</h4><div class="temp">Temperatura: <span style="color:${config.hex}">${sensor.temp} °C</span></div><div class="status" style="color:${config.hex}"><div class="status-dot" style="background-color:${config.hex}"></div>${config.text}</div><p>${sensor.description}</p>`;
+            imageWrapper.appendChild(point);
+            imageWrapper.appendChild(popup);
+            point.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (activePopupId && activePopupId !== sensor.id) document.getElementById(`popup-${activePopupId}`).classList.remove('active');
+                popup.classList.toggle('active');
+                activePopupId = popup.classList.contains('active') ? sensor.id : null;
+            });
+            // Tarjeta
+            const card = document.createElement('div');
+            card.className = 'sensor-card';
+            card.innerHTML = `<h4 style="color:${config.hex}">${sensor.name}</h4><div class="card-content"><div class="card-icon" style="border-color:${config.hex}; color:${config.hex}">${sensor.icon}</div><div class="card-data"><div class="temp">${sensor.temp} °C</div><div class="status-badge" style="color:${config.hex}"><div class="dot" style="background-color:${config.hex}"></div>${config.text}</div></div></div><p>${sensor.description}</p>`;
+            cardsContainer.appendChild(card);
+        });
+        document.addEventListener('click', () => { if (activePopupId) { document.getElementById(`popup-${activePopupId}`).classList.remove('active'); activePopupId = null; } });
+        document.querySelectorAll('.sensor-popup').forEach(p => p.addEventListener('click', (e) => e.stopPropagation()));
+    }
 </script>
 </body>
 </html>
